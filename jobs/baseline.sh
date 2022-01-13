@@ -64,18 +64,18 @@ cd $SLURM_TMPDIR
 
 cd TA_SSL
 
-python baseline_mod.py --dir ./logs/baseline_mod --bsize 128 --epochs 1000 --model resnet10
+python baseline.py --dir ./logs/baseline --bsize 128 --epochs 1000 --model resnet10
 
-python finetune.py --save_dir ./logs/baseline_mod --target_dataset EuroSAT --subset_split datasets/split_seed_1/EuroSAT_labeled_80.csv --embedding_load_path ./logs/baseline_mod/checkpoint_best.pkl --freeze_backbone &
-python finetune.py --save_dir ./logs/baseline_mod --target_dataset CropDisease --subset_split datasets/split_seed_1/CropDisease_labeled_80.csv --embedding_load_path ./logs/baseline_mod/checkpoint_best.pkl --freeze_backbone &
-python finetune.py --save_dir ./logs/baseline_mod --target_dataset ISIC --subset_split datasets/split_seed_1/ISIC_labeled_80.csv --embedding_load_path ./logs/baseline_mod/checkpoint_best.pkl --freeze_backbone &
+python finetune.py --save_dir ./logs/baseline --target_dataset EuroSAT --subset_split datasets/split_seed_1/EuroSAT_labeled_80.csv --embedding_load_path ./logs/baseline/checkpoint_best.pkl --freeze_backbone &
+python finetune.py --save_dir ./logs/baseline --target_dataset CropDisease --subset_split datasets/split_seed_1/CropDisease_labeled_80.csv --embedding_load_path ./logs/baseline/checkpoint_best.pkl --freeze_backbone &
+python finetune.py --save_dir ./logs/baseline --target_dataset ISIC --subset_split datasets/split_seed_1/ISIC_labeled_80.csv --embedding_load_path ./logs/baseline/checkpoint_best.pkl --freeze_backbone &
 wait
-python finetune.py --save_dir ./logs/baseline_mod --target_dataset ChestX --subset_split datasets/split_seed_1/ChestX_labeled_80.csv --embedding_load_path ./logs/baseline_mod/checkpoint_best.pkl --freeze_backbone
+python finetune.py --save_dir ./logs/baseline --target_dataset ChestX --subset_split datasets/split_seed_1/ChestX_labeled_80.csv --embedding_load_path ./logs/baseline/checkpoint_best.pkl --freeze_backbone
 
 echo "-----------------------------------<End of run the program>---------------------------------"
 date +"%T"
 echo "--------------------------------------<backup the result>-----------------------------------"
 date +"%T"
 cd $SLURM_TMPDIR
-cp -r $SLURM_TMPDIR/TA_SSL/logs/baseline_mod/ ~/scratch/TA_SSL/logs/
+cp -r $SLURM_TMPDIR/TA_SSL/logs/baseline/ ~/scratch/TA_SSL/logs/
 

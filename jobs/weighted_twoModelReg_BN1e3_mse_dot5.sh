@@ -5,7 +5,7 @@
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-type=REQUEUE
 #SBATCH --mail-type=ALL
-#SBATCH --job-name=weighted_twoModelReg_noBN1e3_mse_alph_dot8
+#SBATCH --job-name=weighted_twoModelReg_BN1e3_mse_alph_dot5
 #SBATCH --output=%x-%j.out
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:2
@@ -64,18 +64,18 @@ cd $SLURM_TMPDIR
 
 cd TA_SSL
 
-python weighted_twoModelReg_noBN1e3_mse.py --dir ./logs/weighted_twoModelReg_noBN1e3_mse_alph_dot8 --bsize 128 --epochs 1000 --model resnet10 --alpha 0.8
+python weighted_twoModelReg_BN1e3_mse.py --dir ./logs/weighted_twoModelReg_BN1e3_mse_alph_dot5 --bsize 128 --epochs 1000 --model resnet10 --alpha 0.5
 
-python finetune.py --save_dir ./logs/weighted_twoModelReg_noBN1e3_mse_alph_dot8 --target_dataset EuroSAT --subset_split datasets/split_seed_1/EuroSAT_labeled_80.csv --embedding_load_path ./logs/weighted_twoModelReg_noBN1e3_mse_alph_dot8/checkpoint_best.pkl --freeze_backbone &
-python finetune.py --save_dir ./logs/weighted_twoModelReg_noBN1e3_mse_alph_dot8 --target_dataset CropDisease --subset_split datasets/split_seed_1/CropDisease_labeled_80.csv --embedding_load_path ./logs/weighted_twoModelReg_noBN1e3_mse_alph_dot8/checkpoint_best.pkl --freeze_backbone &
-python finetune.py --save_dir ./logs/weighted_twoModelReg_noBN1e3_mse_alph_dot8 --target_dataset ISIC --subset_split datasets/split_seed_1/ISIC_labeled_80.csv --embedding_load_path ./logs/weighted_twoModelReg_noBN1e3_mse_alph_dot8/checkpoint_best.pkl --freeze_backbone &
+python finetune.py --save_dir ./logs/weighted_twoModelReg_BN1e3_mse_alph_dot5 --target_dataset EuroSAT --subset_split datasets/split_seed_1/EuroSAT_labeled_80.csv --embedding_load_path ./logs/weighted_twoModelReg_BN1e3_mse_alph_dot5/checkpoint_best.pkl --freeze_backbone &
+python finetune.py --save_dir ./logs/weighted_twoModelReg_BN1e3_mse_alph_dot5 --target_dataset CropDisease --subset_split datasets/split_seed_1/CropDisease_labeled_80.csv --embedding_load_path ./logs/weighted_twoModelReg_BN1e3_mse_alph_dot5/checkpoint_best.pkl --freeze_backbone &
+python finetune.py --save_dir ./logs/weighted_twoModelReg_BN1e3_mse_alph_dot5 --target_dataset ISIC --subset_split datasets/split_seed_1/ISIC_labeled_80.csv --embedding_load_path ./logs/weighted_twoModelReg_BN1e3_mse_alph_dot5/checkpoint_best.pkl --freeze_backbone &
 wait
-python finetune.py --save_dir ./logs/weighted_twoModelReg_noBN1e3_mse_alph_dot8 --target_dataset ChestX --subset_split datasets/split_seed_1/ChestX_labeled_80.csv --embedding_load_path ./logs/weighted_twoModelReg_noBN1e3_mse_alph_dot8/checkpoint_best.pkl --freeze_backbone
+python finetune.py --save_dir ./logs/weighted_twoModelReg_BN1e3_mse_alph_dot5 --target_dataset ChestX --subset_split datasets/split_seed_1/ChestX_labeled_80.csv --embedding_load_path ./logs/weighted_twoModelReg_BN1e3_mse_alph_dot5/checkpoint_best.pkl --freeze_backbone
 
 echo "-----------------------------------<End of run the program>---------------------------------"
 date +"%T"
 echo "--------------------------------------<backup the result>-----------------------------------"
 date +"%T"
 cd $SLURM_TMPDIR
-cp -r $SLURM_TMPDIR/TA_SSL/logs/weighted_twoModelReg_noBN1e3_mse_alph_dot8/ ~/scratch/TA_SSL/logs/
+cp -r $SLURM_TMPDIR/TA_SSL/logs/weighted_twoModelReg_BN1e3_mse_alph_dot5/ ~/scratch/TA_SSL/logs/
 
